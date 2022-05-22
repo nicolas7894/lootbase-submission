@@ -262,7 +262,7 @@ export default function Header() {
             <a>
             <Image
                 src={"/images/lootbase-white.png"}
-                width={45}
+                width={60}
                 height={32}
                 alt={`lootbase Icon`}
             />

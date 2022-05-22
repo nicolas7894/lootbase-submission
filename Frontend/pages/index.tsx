@@ -408,7 +408,7 @@ const router = useRouter();
                 sx={{
                   textAlign:"center",
                   color:"white"}}>
-              CREATE AN INVESTMENT CLUB
+              CREATE AN GROUP CLUB
             </Typography>
                 </Box>
 

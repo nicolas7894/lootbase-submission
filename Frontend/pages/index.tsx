@@ -408,7 +408,7 @@ const router = useRouter();
                 sx={{
                   textAlign:"center",
                   color:"white"}}>
-              CREATE AN INVESTMENT CLUB
+              CREATE AN GROUP CLUB
             </Typography>
                 </Box>
 
@@ -551,12 +551,8 @@ const router = useRouter();
                 }}
                 select
                 defaultValue={currentToken}
-                onChange={(e)=> {
-                  setCurrentToken(e.target.value as string)
-                }}
-                onBlur={(e)=> {
-                  setCurrentToken(e.target.value as string)
-                }}
+              
+                
                 sx={{
                 input: { color: "white"},
                 label: { color: "white" },

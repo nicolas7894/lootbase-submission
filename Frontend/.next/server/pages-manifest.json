@@ -1,12 +1,6 @@
 {
   "/_app": "pages/_app.js",
-  "/api/group": "pages/api/group.js",
-  "/api/hello": "pages/api/hello.js",
-  "/clubs": "pages/clubs.html",
-  "/explore": "pages/explore.html",
   "/_error": "pages/_error.js",
-  "/dashboard": "pages/dashboard.js",
-  "/": "pages/index.js",
   "/_document": "pages/_document.js",
-  "/404": "pages/404.html"
+  "/": "pages/index.js"
 }

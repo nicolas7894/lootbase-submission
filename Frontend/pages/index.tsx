@@ -551,8 +551,6 @@ const router = useRouter();
                 }}
                 select
                 defaultValue={currentToken}
-              
-                
                 sx={{
                 input: { color: "white"},
                 label: { color: "white" },
@@ -1013,7 +1011,7 @@ const router = useRouter();
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await fetch('https://api-polygon-tokens.polygon.technology/tokenlists/testnet.tokenlist.json')
   const json = await res.json()
 

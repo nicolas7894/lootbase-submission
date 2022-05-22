@@ -1,7 +1,7 @@
 import { Injectable, HttpException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { Member } from "src/member/member.model";
+import { Member } from "src/common/member/member.model";
 import { Group } from "./group.model";
 import { UpdateGroupDto, CreateGroupDto } from "./dto";
 import { HttpService } from "@nestjs/axios";

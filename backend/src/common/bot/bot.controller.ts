@@ -10,8 +10,7 @@ import {
 } from "@nestjs/common";
 import { InjectDiscordClient } from "@discord-nestjs/core";
 import { Client, TextChannel } from "discord.js";
-import { GroupService } from "src/group/group.service";
-import { ProposalService } from "src/proposal/proposal.service";
+import { ProposalService } from "src/common/proposal/proposal.service";
 import { Bot } from "./bot.model";
 import { BotService } from "./bot.service";
 import { CreateBotDto } from "./dto";
@@ -38,7 +37,7 @@ export class BotController {
         {
           style: 5,
           label: `Add deposit `,
-          url: `https://dyspay.com`,
+          url: `${depositPayload.redirectUrl}`,
           disabled: false,
           emoji: {
             id: null,
@@ -70,22 +69,20 @@ export class BotController {
 
     const messageEmbed = {
       type: "rich",
-      title: `NEW DEAL PROPOSAL !!`,
-      description: `#8520\nPrice :  60 WETH\n\nreact with  👍  to vote for`,
+      title: proposalPayload.title,
+      description: proposalPayload.description,
       color: 0x0099ff,
       image: {
-        url: `https://cdn.vox-cdn.com/thumbor/tGNxLvljqJFaFg8GB8IBvTVPNgk=/155x65:995x648/920x613/filters:focal(489x354:677x542):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/70264946/bored_ape_nft_accidental_.0.jpg`,
+        url: proposalPayload.image,
         height: 0,
         width: 0,
       },
     };
     const channel = await this.client.channels.fetch(bot.channelId.toString());
     const message = await (channel as TextChannel).send({ embeds: [messageEmbed] });
-    message.react("👍");
+    await message.react("👍");
 
-    this.botService.handleVote(bot, message, { time: proposalPayload.time });
-
-    return await this.proposalService.create({
+    const proposal = await this.proposalService.create({
       groupAddress: bot.groupAddress,
       messageId: message.id,
       title: proposalPayload.title,
@@ -95,6 +92,9 @@ export class BotController {
       status: "pending",
       transactionHash: proposalPayload.transactionHash,
     });
+    this.botService.handleVote(bot, message, { time: proposalPayload.time });
+
+    return proposal
   }
 
   @Post()

@@ -11,11 +11,11 @@ import {
   Delete,
   Put,
 } from "@nestjs/common";
-import { GroupService } from "src/group/group.service";
+import { GroupService } from "src/common/group/group.service";
 import { CreateGroupDto, UpdateGroupDto } from "./dto";
 import { QueryGroupDto } from "./dto/queryGroup.dto";
-import { MemberService } from "src/member/member.service";
-import { QueryMemberDto } from "src/member/dto";
+import { MemberService } from "src/common/member/member.service";
+import { QueryMemberDto } from "src/common/member/dto";
 
 @Controller("groups")
 export class GroupController {

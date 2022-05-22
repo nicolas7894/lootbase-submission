@@ -4,7 +4,7 @@ import { GroupController } from "./group.controller";
 import { MongooseModule } from "@nestjs/mongoose";
 import { GroupSchema } from "./group.model";
 import { HttpModule } from "@nestjs/axios";
-import { MemberModule } from "src/member/member.module";
+import { MemberModule } from "src/common/member/member.module";
 
 @Module({
   imports: [

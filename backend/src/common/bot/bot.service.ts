@@ -4,17 +4,12 @@ import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { CreateBotDto, UpdateBotDto } from "./dto";
 import { Message } from "discord.js";
-import { ProposalService } from "src/proposal/proposal.service";
+import { ProposalService } from "src/common/proposal/proposal.service";
 import { InjectDiscordClient } from "@discord-nestjs/core";
 import { Client, TextChannel, Collection, MessageReaction } from "discord.js";
-import { GnosisService } from "src/gnosis/gnosis.service";
-import { GroupService } from "src/group/group.service";
-import {
-  SafeTransaction,
-  SafeSignature,
-  SafeTransactionDataPartial,
-} from "@gnosis.pm/safe-core-sdk-types";
-import { Proposal } from "src/proposal/proposal.model";
+import { GnosisService } from "src/common/gnosis/gnosis.service";
+import { GroupService } from "src/common/group/group.service";
+import { Proposal } from "src/common/proposal/proposal.model";
 
 @Injectable()
 export class BotService {
@@ -57,15 +52,14 @@ export class BotService {
       const collected = await this.voteCollector(message, { time });
       const voteCount = collected.size;
       const proposal = await this.proposalService.findOne({ messageId: message.id });
-      if (!proposal || proposal.status =="cancel") return;
+      if (!proposal || proposal.status == "cancel") return;
       if (await this.isProposalValid(message.channelId, voteCount, 50)) {
-        await this.proposalService.update(proposal._id, { status: "validate" });
-      //  const group = await this.groupService.findOne({ groupAddress: bot.groupAddress });
-       // if (!group) return;
-       await this.createTransaction(proposal, "0x61a839621d1Aaf2C35b67089563833Ea213014Be");
-       //     await this.createTransaction(proposal, group.treasureAddress);
+        const group = await this.groupService.findOne({ groupAddress: bot.groupAddress });
+        if (!group) return;
+        await this.createTransaction(proposal, group.treasureAddress);
         message.reply("This transaction has been approved !! ");
-      }else {
+        await this.proposalService.update(proposal._id, { status: "validate" });
+      } else {
         message.reply("Proposal has been rejected.");
       }
     } catch (error) {

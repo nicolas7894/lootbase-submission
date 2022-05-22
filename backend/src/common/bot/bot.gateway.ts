@@ -1,11 +1,8 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { Once, InjectDiscordClient, On, UseGuards, UseCollectors } from "@discord-nestjs/core";
-import { Client, Message, MessageEmbed, TextChannel } from "discord.js";
-
+import { Once, InjectDiscordClient, On, UseGuards } from "@discord-nestjs/core";
+import { Client, Message } from "discord.js";
 import { MessageFromUserGuard } from "./guards/message-from-user.guard";
 import { ActivateCommandGuard } from "./guards/bot-command.guard";
-import { VoteCollector } from "./vote-collector";
-import { GroupService } from "src/group/group.service";
 import { BotService } from "./bot.service";
 
 @Injectable()
@@ -15,7 +12,6 @@ export class BotGateway {
   constructor(
     @InjectDiscordClient()
     private readonly client: Client,
-    private readonly groupService: GroupService,
     private readonly botService: BotService
   ) {}
 
@@ -46,8 +42,6 @@ export class BotGateway {
         status: "activated",
       });
     }
-
     await message.reply({ embeds: [embeds] });
   }
-
 }

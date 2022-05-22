@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateProposalDto } from "src/proposal/dto";
+import { CreateProposalDto } from "src/common/proposal/dto";
 import { Proposal } from "./proposal.model";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
